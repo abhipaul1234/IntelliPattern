@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from datetime import datetime
 import os
+import tempfile
 import google.generativeai as genai
 from dotenv import load_dotenv
 import json
@@ -20,18 +21,38 @@ app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'dev-key-change-in-prod
 
 # Database configuration - handle both PostgreSQL and SQLite
 database_url = os.getenv('DATABASE_URL')
+if database_url and database_url.startswith('postgres://'):
+    # Some providers hand out the older "postgres://" scheme, which SQLAlchemy no longer accepts
+    database_url = database_url.replace('postgres://', 'postgresql://', 1)
 if database_url and database_url.startswith('postgresql://'):
+    # Name the driver explicitly. SQLAlchemy 2.1 defaults to psycopg 3, but this project installs psycopg2.
+    database_url = database_url.replace('postgresql://', 'postgresql+psycopg2://', 1)
+
+using_temp_sqlite = False
+if database_url and database_url.startswith('postgresql+psycopg2://'):
     # For production with PostgreSQL
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 else:
     # For local development with SQLite
-    os.makedirs('instance', exist_ok=True)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-    
+    try:
+        os.makedirs('instance', exist_ok=True)
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+    except OSError:
+        # Read-only hosts such as Vercel cannot create folders next to the code. Start with a throwaway
+        # database in the temp folder instead of crashing; set DATABASE_URL to keep data permanently.
+        temp_db = os.path.join(tempfile.gettempdir(), 'app.db')
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + temp_db.replace('\\', '/')
+        using_temp_sqlite = True
+        print("Warning: DATABASE_URL is not set to a PostgreSQL address; using a temporary database.")
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize extensions
 db.init_app(app)
+
+if using_temp_sqlite:
+    with app.app_context():
+        db.create_all()
 migrate = Migrate(app, db)
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -79,7 +100,7 @@ def get_ai_insights():
 
 Welcome to your AI Learning Coach! I'm here to help you optimize your academic performance.
 
-**Current Status:**You have {} study session(s) logged. To provide meaningful insights, I recommend logging at least 5-10 study sessions along with some wellness data.
+**Current Status:** You have {} study session(s) logged. To provide meaningful insights, I recommend logging at least 5-10 study sessions along with some wellness data.
 
 **Quick Tips to Get Started:**
 • Log your study sessions with honest focus ratings
