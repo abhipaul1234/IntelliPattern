@@ -4,54 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - IntelliPattern</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Inter font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom styles -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(120deg, #0F111A 60%, #16203A 100%);
-            min-height: 100vh;
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #5B83EB 0%, #1A3A7C 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-        }
-        .glow {
-            box-shadow: 0 0 16px 2px #5B83EB55, 0 2px 8px #000a;
-        }
-        .form-card {
-            background: rgba(24,26,36,0.95);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(91,131,235,0.3);
-        }
-        .input-field {
-            background: rgba(35,43,70,0.8);
-            border: 1px solid rgba(91,131,235,0.3);
-            color: #E2E8F0;
-        }
-        .input-field:focus {
-            border-color: #5B83EB;
-            box-shadow: 0 0 0 3px rgba(91,131,235,0.1);
-        }
-        .input-field::placeholder {
-            color: #94A3B8;
-        }
-        .error-text {
-            color: #FCA5A5;
-        }
-    </style>
+    {% include '_head.html' %}
 </head>
 <body class="relative text-white overflow-x-hidden min-h-screen flex items-center justify-center">
     
@@ -67,7 +20,7 @@
         <!-- Header -->
         <div class="text-center mb-8">
             <div class="flex justify-center mb-4">
-                <img src="{{ url_for('static', filename='logo.png') }}" alt="IntelliPattern" class="w-16 h-16">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="IntelliPattern" class="w-16 h-16 rounded-xl">
             </div>
             <h1 class="text-3xl font-bold gradient-text mb-2">Join Us</h1>
             <p class="text-blue-100">Create your IntelliPattern account</p>

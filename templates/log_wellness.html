@@ -5,103 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - IntelliPattern</title>
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
     <!-- AOS for animations -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <!-- Inter font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom styles -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(120deg, #0F111A 60%, #16203A 100%);
-            min-height: 100vh;
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #5B83EB 0%, #1A3A7C 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-        }
-        .glow {
-            box-shadow: 0 0 16px 2px #5B83EB55, 0 2px 8px #000a;
-        }
-        .neon-border {
-            border: 2px solid #5B83EB;
-            box-shadow: 0 0 12px #5B83EB99;
-        }
-        .nav-link {
-            position: relative;
-            transition: color 0.2s;
-        }
-        .nav-link::after {
-            content: '';
-            display: block;
-            height: 2px;
-            width: 0;
-            background: linear-gradient(90deg, #5B83EB, #1A3A7C);
-            transition: width 0.3s;
-            position: absolute;
-            left: 0; bottom: -4px;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        .nav-link:hover {
-            color: #5B83EB;
-            text-shadow: 0 0 8px #5B83EB99;
-        }
-        .sticky-nav {
-            box-shadow: 0 2px 16px #0F111A99;
-            background: rgba(15,17,26,0.95);
-            backdrop-filter: blur(8px);
-        }
-        .form-card {
-            background: rgba(24,26,36,0.95);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(91,131,235,0.3);
-        }
-        .input-field {
-            background: rgba(35,43,70,0.8);
-            border: 1px solid rgba(91,131,235,0.3);
-            color: #E2E8F0;
-        }
-        .input-field:focus {
-            border-color: #5B83EB;
-            box-shadow: 0 0 0 3px rgba(91,131,235,0.1);
-        }
-        .input-field::placeholder {
-            color: #94A3B8;
-        }
-        .radio-container {
-            background: rgba(35,43,70,0.5);
-            border: 1px solid rgba(91,131,235,0.2);
-        }
-    </style>
+    {% include '_head.html' %}
 </head>
 <body class="relative text-white overflow-x-hidden min-h-screen">
-    <!-- Sticky Navbar -->
-    <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 py-4 transition-all duration-300 sticky-nav">
-        <div class="flex items-center space-x-3">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="IntelliPattern Logo" class="w-8 h-8">
-            <span class="text-2xl font-extrabold gradient-text tracking-wide">IntelliPattern</span>
-        </div>
-        <div class="flex items-center space-x-8">
-            <a href="{{ url_for('home') }}" class="nav-link text-lg font-medium">Home</a>
-            <a href="{{ url_for('dashboard') }}" class="nav-link text-lg font-medium">Dashboard</a>
-            <a href="{{ url_for('patterns') }}" class="nav-link text-lg font-medium">Patterns</a>
-            <a href="{{ url_for('ai_insights') }}" class="nav-link text-lg font-medium">AI Insights</a>
-        </div>
-    </nav>
+    {% include '_nav.html' %}
 
     <!-- Main Content -->
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-32">
@@ -117,7 +27,7 @@
                 <!-- Date -->
                 <div>
                     <label for="date" class="block text-sm font-medium text-blue-200 mb-2">
-                        <i class="fas fa-calendar mr-2 text-indigo-400"></i>Date
+                        <i class="fas fa-calendar mr-2 text-blue-400"></i>Date
                     </label>
                     <input type="date" id="date" name="date" required
                            class="w-full px-4 py-3 rounded-lg input-field focus:outline-none transition-all duration-300">
@@ -149,35 +59,35 @@
                             <input type="radio" id="stress1" name="stress_level" value="1" required
                                    class="mr-3 text-blue-500 focus:ring-blue-500">
                             <label for="stress1" class="text-sm text-blue-100 flex items-center">
-                                <span class="text-green-300 mr-2">😌</span>1 - Very Relaxed
+                                <i class="fas fa-face-smile-beam text-green-300 mr-2"></i>1 - Very Relaxed
                             </label>
                         </div>
                         <div class="flex items-center">
                             <input type="radio" id="stress2" name="stress_level" value="2"
                                    class="mr-3 text-blue-500 focus:ring-blue-500">
                             <label for="stress2" class="text-sm text-blue-100 flex items-center">
-                                <span class="text-green-300 mr-2">🙂</span>2 - Calm
+                                <i class="fas fa-face-smile text-green-300 mr-2"></i>2 - Calm
                             </label>
                         </div>
                         <div class="flex items-center">
                             <input type="radio" id="stress3" name="stress_level" value="3"
                                    class="mr-3 text-blue-500 focus:ring-blue-500">
                             <label for="stress3" class="text-sm text-blue-100 flex items-center">
-                                <span class="text-yellow-400 mr-2">😐</span>3 - Neutral
+                                <i class="fas fa-face-meh text-yellow-400 mr-2"></i>3 - Neutral
                             </label>
                         </div>
                         <div class="flex items-center">
                             <input type="radio" id="stress4" name="stress_level" value="4"
                                    class="mr-3 text-blue-500 focus:ring-blue-500">
                             <label for="stress4" class="text-sm text-blue-100 flex items-center">
-                                <span class="text-orange-300 mr-2">😰</span>4 - Stressed
+                                <i class="fas fa-face-frown-open text-orange-300 mr-2"></i>4 - Stressed
                             </label>
                         </div>
                         <div class="flex items-center">
                             <input type="radio" id="stress5" name="stress_level" value="5"
                                    class="mr-3 text-blue-500 focus:ring-blue-500">
                             <label for="stress5" class="text-sm text-blue-100 flex items-center">
-                                <span class="text-red-300 mr-2">😵</span>5 - Very Stressed
+                                <i class="fas fa-face-tired text-red-300 mr-2"></i>5 - Very Stressed
                             </label>
                         </div>
                     </div>
@@ -193,35 +103,35 @@
                             <input type="radio" id="mood1" name="mood_rating" value="1" required
                                    class="mr-3 text-blue-500 focus:ring-blue-500">
                             <label for="mood1" class="text-sm text-blue-100 flex items-center">
-                                <span class="text-red-300 mr-2">😢</span>1 - Very Sad
+                                <i class="fas fa-face-sad-tear text-red-300 mr-2"></i>1 - Very Sad
                             </label>
                         </div>
                         <div class="flex items-center">
                             <input type="radio" id="mood2" name="mood_rating" value="2"
                                    class="mr-3 text-blue-500 focus:ring-blue-500">
                             <label for="mood2" class="text-sm text-blue-100 flex items-center">
-                                <span class="text-orange-300 mr-2">☹️</span>2 - Sad
+                                <i class="fas fa-face-frown text-orange-300 mr-2"></i>2 - Sad
                             </label>
                         </div>
                         <div class="flex items-center">
                             <input type="radio" id="mood3" name="mood_rating" value="3"
                                    class="mr-3 text-blue-500 focus:ring-blue-500">
                             <label for="mood3" class="text-sm text-blue-100 flex items-center">
-                                <span class="text-yellow-300 mr-2">😐</span>3 - Neutral
+                                <i class="fas fa-face-meh text-yellow-300 mr-2"></i>3 - Neutral
                             </label>
                         </div>
                         <div class="flex items-center">
                             <input type="radio" id="mood4" name="mood_rating" value="4"
                                    class="mr-3 text-blue-500 focus:ring-blue-500">
                             <label for="mood4" class="text-sm text-blue-100 flex items-center">
-                                <span class="text-green-300 mr-2">🙂</span>4 - Happy
+                                <i class="fas fa-face-smile text-green-300 mr-2"></i>4 - Happy
                             </label>
                         </div>
                         <div class="flex items-center">
                             <input type="radio" id="mood5" name="mood_rating" value="5"
                                    class="mr-3 text-blue-500 focus:ring-blue-500">
                             <label for="mood5" class="text-sm text-blue-100 flex items-center">
-                                <span class="text-green-300 mr-2">😄</span>5 - Very Happy
+                                <i class="fas fa-face-laugh-beam text-green-300 mr-2"></i>5 - Very Happy
                             </label>
                         </div>
                     </div>
@@ -259,7 +169,7 @@
                 <div class="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-xl border border-blue-500/30">
                     <h3 class="text-xl font-bold text-blue-100 mb-4 text-center">Wellness Summary</h3>
                     <div id="wellness-summary" class="text-center py-4">
-                        <div class="text-6xl mb-2">💚</div>
+                        <div class="text-5xl mb-2 text-blue-400"><i class="fas fa-heart-pulse"></i></div>
                         <p class="text-blue-200">Fill out the form to see your wellness overview</p>
                     </div>
                 </div>
@@ -316,16 +226,16 @@
 
             let message, color;
             if (hours < 6) {
-                message = '⚠️ Too little sleep - may affect concentration';
+                message = '<i class="fas fa-triangle-exclamation mr-1"></i> Too little sleep - may affect concentration';
                 color = 'text-red-400';
             } else if (hours < 7) {
-                message = '😴 Below recommended - consider more sleep';
+                message = '<i class="fas fa-bed mr-1"></i> Below recommended - consider more sleep';
                 color = 'text-orange-400';
             } else if (hours <= 9) {
-                message = '✅ Good sleep duration for optimal performance';
+                message = '<i class="fas fa-circle-check mr-1"></i> Good sleep duration for optimal performance';
                 color = 'text-green-400';
             } else {
-                message = '😴 Quite a lot of sleep - feeling refreshed?';
+                message = '<i class="fas fa-bed mr-1"></i> Quite a lot of sleep - feeling refreshed?';
                 color = 'text-blue-400';
             }
 
@@ -340,7 +250,7 @@
 
             if (!sleep || !stress || !mood) {
                 wellnessSummary.innerHTML = `
-                    <div class="text-6xl mb-2">💚</div>
+                    <div class="text-5xl mb-2 text-blue-400"><i class="fas fa-heart-pulse"></i></div>
                     <p class="text-blue-200">Fill out the form to see your wellness overview</p>
                 `;
                 return;
@@ -368,31 +278,31 @@
             else if (exercise >= 15) score += 15;
             else if (exercise > 0) score += 10;
 
-            let emoji, color, bgColor, message;
+            let icon, color, bgColor, message;
             if (score >= 85) {
-                emoji = '🌟';
+                icon = 'fa-star';
                 color = 'text-green-400';
                 bgColor = 'bg-gradient-to-r from-green-900/30 to-blue-900/30 border-green-500/30';
                 message = 'Excellent wellness! Perfect day for studying!';
             } else if (score >= 70) {
-                emoji = '😊';
+                icon = 'fa-face-smile';
                 color = 'text-blue-400';
                 bgColor = 'bg-gradient-to-r from-blue-900/30 to-indigo-900/30 border-blue-500/30';
                 message = 'Good wellness day! You\'re in great shape!';
             } else if (score >= 55) {
-                emoji = '😐';
+                icon = 'fa-face-meh';
                 color = 'text-yellow-400';
                 bgColor = 'bg-gradient-to-r from-yellow-900/30 to-orange-900/30 border-yellow-500/30';
                 message = 'Average wellness. Consider improving sleep or stress levels.';
             } else {
-                emoji = '😔';
+                icon = 'fa-face-frown';
                 color = 'text-red-400';
                 bgColor = 'bg-gradient-to-r from-red-900/30 to-pink-900/30 border-red-500/30';
                 message = 'Low wellness score. Take care of yourself today!';
             }
 
             wellnessSummary.innerHTML = `
-                <div class="text-6xl mb-2">${emoji}</div>
+                <div class="text-5xl mb-2 ${color}"><i class="fas ${icon}"></i></div>
                 <div class="text-2xl font-bold ${color} mb-2">${score}/100</div>
                 <p class="${color} font-medium">${message}</p>
                 <div class="mt-3">

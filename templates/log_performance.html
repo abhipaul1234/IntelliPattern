@@ -5,99 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - IntelliPattern</title>
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
     <!-- AOS for animations -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <!-- Inter font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom styles -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(120deg, #0F111A 60%, #16203A 100%);
-            min-height: 100vh;
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #5B83EB 0%, #1A3A7C 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-        }
-        .glow {
-            box-shadow: 0 0 16px 2px #5B83EB55, 0 2px 8px #000a;
-        }
-        .neon-border {
-            border: 2px solid #5B83EB;
-            box-shadow: 0 0 12px #5B83EB99;
-        }
-        .nav-link {
-            position: relative;
-            transition: color 0.2s;
-        }
-        .nav-link::after {
-            content: '';
-            display: block;
-            height: 2px;
-            width: 0;
-            background: linear-gradient(90deg, #5B83EB, #1A3A7C);
-            transition: width 0.3s;
-            position: absolute;
-            left: 0; bottom: -4px;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        .nav-link:hover {
-            color: #5B83EB;
-            text-shadow: 0 0 8px #5B83EB99;
-        }
-        .sticky-nav {
-            box-shadow: 0 2px 16px #0F111A99;
-            background: rgba(15,17,26,0.95);
-            backdrop-filter: blur(8px);
-        }
-        .form-card {
-            background: rgba(24,26,36,0.95);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(91,131,235,0.3);
-        }
-        .input-field {
-            background: rgba(35,43,70,0.8);
-            border: 1px solid rgba(91,131,235,0.3);
-            color: #E2E8F0;
-        }
-        .input-field:focus {
-            border-color: #5B83EB;
-            box-shadow: 0 0 0 3px rgba(91,131,235,0.1);
-        }
-        .input-field::placeholder {
-            color: #94A3B8;
-        }
-    </style>
+    {% include '_head.html' %}
 </head>
 <body class="relative text-white overflow-x-hidden min-h-screen">
-    <!-- Sticky Navbar -->
-    <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 py-4 transition-all duration-300 sticky-nav">
-        <div class="flex items-center space-x-3">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="IntelliPattern Logo" class="w-8 h-8">
-            <span class="text-2xl font-extrabold gradient-text tracking-wide">IntelliPattern</span>
-        </div>
-        <div class="flex items-center space-x-8">
-            <a href="{{ url_for('home') }}" class="nav-link text-lg font-medium">Home</a>
-            <a href="{{ url_for('dashboard') }}" class="nav-link text-lg font-medium">Dashboard</a>
-            <a href="{{ url_for('patterns') }}" class="nav-link text-lg font-medium">Patterns</a>
-            <a href="{{ url_for('ai_insights') }}" class="nav-link text-lg font-medium">AI Insights</a>
-        </div>
-    </nav>
+    {% include '_nav.html' %}
 
     <!-- Main Content -->
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-32">
@@ -175,7 +89,7 @@
                 <!-- Date -->
                 <div>
                     <label for="date" class="block text-sm font-medium text-blue-200 mb-2">
-                        <i class="fas fa-calendar mr-2 text-indigo-400"></i>Date
+                        <i class="fas fa-calendar mr-2 text-blue-400"></i>Date
                     </label>
                     <input type="date" id="date" name="date" required
                            class="w-full px-4 py-3 rounded-lg input-field focus:outline-none transition-all duration-300">
@@ -195,7 +109,7 @@
                 <div class="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-xl border border-blue-500/30">
                     <h3 class="text-xl font-bold text-blue-100 mb-4 text-center">Performance Indicator</h3>
                     <div id="performance-indicator" class="text-center py-4">
-                        <div class="text-6xl mb-2">📊</div>
+                        <div class="text-5xl mb-2 text-blue-400"><i class="fas fa-chart-column"></i></div>
                         <p class="text-blue-200">Enter your scores to see performance analysis</p>
                     </div>
                 </div>
@@ -207,7 +121,7 @@
                         Cancel
                     </a>
                     <button type="submit" 
-                            class="px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 glow">
+                            class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-semibold rounded-xl transition-all duration-300 glow">
                         <i class="fas fa-save mr-2"></i>Record Performance
                     </button>
                 </div>
@@ -244,30 +158,30 @@
         }
 
         function updatePerformanceIndicator(percentage) {
-            let emoji, color, message, bgColor;
+            let icon, color, message, bgColor;
             
             if (percentage >= 90) {
-                emoji = '🏆';
+                icon = 'fa-trophy';
                 color = 'text-yellow-400';
                 bgColor = 'bg-gradient-to-r from-yellow-900/30 to-orange-900/30 border-yellow-500/30';
                 message = 'Excellent! Outstanding performance!';
             } else if (percentage >= 80) {
-                emoji = '🌟';
+                icon = 'fa-star';
                 color = 'text-green-400';
                 bgColor = 'bg-gradient-to-r from-green-900/30 to-emerald-900/30 border-green-500/30';
                 message = 'Great job! Very good performance!';
             } else if (percentage >= 70) {
-                emoji = '👍';
+                icon = 'fa-thumbs-up';
                 color = 'text-blue-400';
                 bgColor = 'bg-gradient-to-r from-blue-900/30 to-indigo-900/30 border-blue-500/30';
                 message = 'Good work! Above average performance!';
             } else if (percentage >= 60) {
-                emoji = '📈';
+                icon = 'fa-arrow-trend-up';
                 color = 'text-orange-400';
                 bgColor = 'bg-gradient-to-r from-orange-900/30 to-red-900/30 border-orange-500/30';
                 message = 'Keep improving! Room for growth!';
             } else {
-                emoji = '💪';
+                icon = 'fa-dumbbell';
                 color = 'text-red-400';
                 bgColor = 'bg-gradient-to-r from-red-900/30 to-pink-900/30 border-red-500/30';
                 message = 'Keep working hard! You can do better!';
@@ -275,7 +189,7 @@
             
             performanceIndicator.className = `text-center py-4 rounded-xl border ${bgColor}`;
             performanceIndicator.innerHTML = `
-                <div class="text-6xl mb-2">${emoji}</div>
+                <div class="text-5xl mb-2 ${color}"><i class="fas ${icon}"></i></div>
                 <div class="text-2xl font-bold ${color} mb-1">${percentage.toFixed(1)}%</div>
                 <p class="${color} font-medium">${message}</p>
             `;
@@ -284,7 +198,7 @@
         function resetPerformanceIndicator() {
             performanceIndicator.className = 'text-center py-4';
             performanceIndicator.innerHTML = `
-                <div class="text-6xl mb-2">📊</div>
+                <div class="text-5xl mb-2 text-blue-400"><i class="fas fa-chart-column"></i></div>
                 <p class="text-blue-200">Enter your scores to see performance analysis</p>
             `;
         }

@@ -4,55 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - IntelliPattern</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            background: radial-gradient(ellipse at 60% 20%, #0F111A 60%, #16203A 100%);
-        }
-        .glow {
-            box-shadow: 0 0 32px 4px #5B83EB55, 0 2px 8px #000a;
-        }
-        .glass {
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(8px);
-            border-radius: 1.5rem;
-            border: 1.5px solid #33415544;
-        }
-        .stat-card {
-            background: linear-gradient(135deg, #16203A 80%, #232b46 100%);
-            border: 1.5px solid #5B83EB;
-            box-shadow: 0 8px 40px #1a223a99, 0 1.5px 8px #000a;
-        }
-        .stat-icon {
-            color: #5B83EB;
-        }
-        .chart-container {
-            background: #181A24;
-            border-radius: 1.5rem;
-            box-shadow: 0 0 24px #5B83EB22;
-        }
-    </style>
+    {% include '_head.html' %}
 </head>
 <body class="min-h-screen text-white">
-    <!-- Navigation -->
-    <nav class="flex justify-between items-center px-8 py-6 z-10 relative">
-        <div class="flex items-center space-x-3">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="IntelliPattern Logo" class="w-8 h-8">
-            <span class="text-2xl font-bold tracking-wide bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">IntelliPattern</span>
-        </div>
-        <div class="flex items-center space-x-6">
-            <a href="/" class="hover:text-blue-400 transition">Home</a>
-            <a href="/dashboard" class="hover:text-blue-400 transition">Dashboard</a>
-            <a href="/patterns" class="hover:text-blue-400 transition">Patterns</a>
-            <a href="/ai-insights" class="hover:text-blue-400 transition">AI Insights</a>
-            {% if current_user.is_authenticated %}
-                <span class="text-blue-200 text-sm">{{ current_user.email }}</span>
-                <a href="/logout" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm transition-colors">Logout</a>
-            {% endif %}
-        </div>
-    </nav>
+    {% include '_nav.html' %}
 
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -71,7 +27,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Header -->
         <div class="mb-8 text-center">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-8 gradient-text drop-shadow-lg flex items-center gap-3" style="background: linear-gradient(90deg, #5B83EB 0%, #1A3A7C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent;">Dashboard Overview</h1>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-8 gradient-text drop-shadow-lg flex items-center gap-3">Dashboard Overview</h1>
             <p class="text-lg text-blue-100">Track your academic progress and insights</p>
         </div>
 
@@ -266,16 +222,16 @@
                                     datasets: [{
                                         data: data.subjects.map(s => s.hours),
                                         backgroundColor: [
-                                            '#3B82F6', '#10B981', '#8B5CF6', '#F59E0B', '#EF4444'
+                                            '#E8B94A', '#4CAF8A', '#A8A29E', '#C97B4A', '#6E6963'
                                         ],
-                                        borderColor: '#232b46',
+                                        borderColor: '#1e1e20',
                                         borderWidth: 2
                                     }]
                                 },
                                 options: {
                                     plugins: {
                                         legend: {
-                                            labels: { color: '#e0e7ef', font: { size: 14 } }
+                                            labels: { color: '#cfccc6', font: { size: 14 } }
                                         }
                                     },
                                     responsive: true,
@@ -293,18 +249,18 @@
                                     datasets: [{
                                         label: 'Study Hours',
                                         data: data.daily.map(d => d.hours),
-                                        borderColor: '#3B82F6',
-                                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                        borderColor: '#E8B94A',
+                                        backgroundColor: 'rgba(232, 185, 74, 0.1)',
                                         tension: 0.4,
                                         pointBackgroundColor: '#fff',
-                                        pointBorderColor: '#3B82F6',
+                                        pointBorderColor: '#E8B94A',
                                         pointRadius: 5
                                     }]
                                 },
                                 options: {
                                     plugins: {
                                         legend: {
-                                            labels: { color: '#e0e7ef', font: { size: 14 } }
+                                            labels: { color: '#cfccc6', font: { size: 14 } }
                                         }
                                     },
                                     responsive: true,
@@ -312,12 +268,12 @@
                                     scales: {
                                         y: {
                                             beginAtZero: true,
-                                            ticks: { color: '#e0e7ef' },
-                                            grid: { color: '#33415544' }
+                                            ticks: { color: '#cfccc6' },
+                                            grid: { color: 'rgba(255,255,255,0.08)' }
                                         },
                                         x: {
-                                            ticks: { color: '#e0e7ef' },
-                                            grid: { color: '#33415544' }
+                                            ticks: { color: '#cfccc6' },
+                                            grid: { color: 'rgba(255,255,255,0.08)' }
                                         }
                                     }
                                 }
@@ -339,8 +295,8 @@
         document.addEventListener('DOMContentLoaded', initializeCharts);
     </script>
 
-    <footer class="w-full text-center py-8 mt-16 text-blue-200 text-sm bg-gradient-to-t from-[#0a0f1c] via-transparent to-transparent">
-        Made with <span class="text-pink-400">&#10084;&#65039;</span> by <strong>Abhinaba Paul</strong><br>
+    <footer class="w-full text-center py-8 mt-16 text-blue-200 text-sm bg-gradient-to-t from-[#0b0b0c] via-transparent to-transparent">
+        Built by <strong>Abhinaba Paul</strong><br>
         <span class="text-blue-300">Computer Science Student at VIT, Vellore</span>
     </footer>
 </body>

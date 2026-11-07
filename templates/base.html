@@ -5,109 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title or 'IntelliPattern' }}</title>
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
     <!-- AOS for animations -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <!-- Inter font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom styles -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(120deg, #0F111A 60%, #16203A 100%);
-            min-height: 100vh;
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #5B83EB 0%, #1A3A7C 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-        }
-        .glow {
-            box-shadow: 0 0 16px 2px #5B83EB55, 0 2px 8px #000a;
-        }
-        .neon-border {
-            border: 2px solid #5B83EB;
-            box-shadow: 0 0 12px #5B83EB99;
-        }
-        .parallax {
-            will-change: transform;
-        }
-        .terminal-header-dot {
-            width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 6px;
-        }
-        .dot-red { background: #FF5F56; }
-        .dot-yellow { background: #FFBD2E; }
-        .dot-green { background: #27C93F; }
-        .feature-card {
-            transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
-        }
-        .feature-card:hover {
-            transform: rotateY(6deg) scale(1.03);
-            box-shadow: 0 8px 32px #5B83EB33;
-        }
-        .nav-link {
-            position: relative;
-            transition: color 0.2s;
-        }
-        .nav-link::after {
-            content: '';
-            display: block;
-            height: 2px;
-            width: 0;
-            background: linear-gradient(90deg, #5B83EB, #1A3A7C);
-            transition: width 0.3s;
-            position: absolute;
-            left: 0; bottom: -4px;
-        }
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 100%;
-        }
-        .nav-link:hover {
-            color: #5B83EB;
-            text-shadow: 0 0 8px #5B83EB99;
-        }
-        .sticky-nav {
-            box-shadow: 0 2px 16px #0F111A99;
-            background: rgba(15,17,26,0.95);
-            backdrop-filter: blur(8px);
-        }
-    </style>
+    {% include '_head.html' %}
 </head>
 <body class="relative text-white overflow-x-hidden">
     
-    <!-- Sticky Navbar -->
-    <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 py-4 transition-all duration-300">
-        <div class="flex items-center space-x-3">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="IntelliPattern Logo" class="w-10 h-10">
-            <span class="text-2xl font-extrabold gradient-text tracking-wide">IntelliPattern</span>
-        </div>
-        <div class="flex items-center space-x-8">
-            <a href="/" class="nav-link text-lg font-medium">Home</a>
-            {% if current_user.is_authenticated %}
-                <a href="/dashboard" class="nav-link text-lg font-medium">Dashboard</a>
-                <a href="/patterns" class="nav-link text-lg font-medium">Patterns</a>
-                <a href="/ai-insights" class="nav-link text-lg font-medium">AI Insights</a>
-                <span class="text-blue-200 text-sm">{{ current_user.email }}</span>
-                <a href="/logout" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm transition-colors">Logout</a>
-            {% else %}
-                <a href="/login" class="nav-link text-lg font-medium">Login</a>
-                <a href="/register" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm transition-colors">Sign Up</a>
-            {% endif %}
-        </div>
-    </nav>
+    {% include '_nav.html' %}
 
     <!-- Hero Section -->
     <section class="relative flex flex-col justify-center items-center min-h-screen pt-32 pb-12 overflow-hidden">
@@ -121,29 +26,29 @@
         <div class="relative z-10 flex flex-col items-center text-center" data-aos="fade-up">
             <h1 class="text-5xl md:text-7xl font-extrabold gradient-text mb-6" style="line-height:1.1;">Your AI Learning Coach</h1>
             <p class="text-xl md:text-2xl font-medium text-blue-100 mb-8 max-w-2xl">Log study habits, track wellness, and get AI-powered insights to optimize your learning journey.</p>
-            <a href="/dashboard" class="inline-block w-[200px] h-[50px] leading-[50px] text-lg font-bold rounded-full bg-gradient-to-r from-[#5B83EB] to-[#1A3A7C] text-white shadow-lg glow transition-transform duration-200 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-blue-400" data-aos="zoom-in" data-aos-delay="200">Go to Dashboard</a>
+            <a href="/dashboard" class="inline-block w-[200px] h-[50px] leading-[50px] text-lg font-bold rounded-full bg-gradient-to-r from-[#b9840f] to-[#8a620c] text-white shadow-lg glow transition-transform duration-200 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-blue-400" data-aos="zoom-in" data-aos-delay="200">Go to Dashboard</a>
         </div>
     </section>
 
     <!-- AI Analysis Preview Card -->
     <section class="flex justify-center items-center w-full -mt-24 mb-16 z-20 relative" data-aos="fade-up" data-aos-delay="400">
-        <div class="neon-border rounded-2xl bg-[#181A24] shadow-2xl p-0 max-w-2xl w-full mx-4">
-            <div class="flex items-center px-6 py-3 border-b border-[#232b46] bg-[#232b46] rounded-t-2xl">
+        <div class="neon-border rounded-2xl bg-[#161617] shadow-2xl p-0 max-w-2xl w-full mx-4">
+            <div class="flex items-center px-6 py-3 border-b border-[#1e1e20] bg-[#1e1e20] rounded-t-2xl">
                 <span class="terminal-header-dot dot-red"></span>
                 <span class="terminal-header-dot dot-yellow"></span>
                 <span class="terminal-header-dot dot-green"></span>
                 <span class="ml-4 text-blue-200 font-mono text-sm">AI Analysis Preview</span>
             </div>
-            <div class="px-8 pt-6 pb-2">
+            <div class="px-5 sm:px-8 pt-6 pb-2">
                 <div class="mb-4 text-blue-100 text-base font-medium">
                     <span class="text-blue-400 font-bold">Summary:</span> Your study data shows strong consistency and focus. Keep up the good work! Here are some key patterns and tips to optimize your learning journey:
                 </div>
             </div>
-            <div class="px-8 pb-6 font-mono text-lg text-blue-100">
+            <div class="px-5 sm:px-8 pb-6 font-mono text-sm sm:text-lg text-blue-100">
                 <span class="text-blue-400">patterns:</span> <span class="text-blue-300">3</span>
-                <br><span class="text-green-400">✔</span> <span class="text-blue-100">Consistent study times improve retention</span>
-                <br><span class="text-blue-400">⚡</span> <span class="text-blue-100">High focus correlates with better performance</span>
-                <br><span class="text-blue-300">💡</span> <span class="text-blue-100">Try spaced repetition for optimal results</span>
+                <br><i class="fas fa-check text-green-400 mr-1"></i> <span class="text-blue-100">Consistent study times improve retention</span>
+                <br><i class="fas fa-bolt text-blue-400 mr-1"></i> <span class="text-blue-100">High focus correlates with better performance</span>
+                <br><i class="fas fa-lightbulb text-blue-300 mr-1"></i> <span class="text-blue-100">Try spaced repetition for optimal results</span>
             </div>
         </div>
     </section>
@@ -171,8 +76,8 @@
     </section>
 
     <!-- Footer -->
-    <footer class="w-full text-center py-8 mt-16 text-blue-200 text-sm bg-[#0A0C14]">
-        Made with <span class="text-blue-400">&#10084;&#65039;</span> by <strong>Abhinaba Paul</strong><br>
+    <footer class="w-full text-center py-8 mt-16 text-blue-200 text-sm bg-[#08080a]">
+        Built by <strong>Abhinaba Paul</strong><br>
         <span class="text-blue-300">Computer Science Student at VIT, Vellore</span>
     </footer>
 

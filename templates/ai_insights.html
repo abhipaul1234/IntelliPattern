@@ -4,48 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - IntelliPattern</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            background: radial-gradient(ellipse at 60% 20%, #0F111A 60%, #16203A 100%);
-        }
-        .glow {
-            box-shadow: 0 0 32px 4px #5B83EB55, 0 2px 8px #000a;
-        }
-        .glass {
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(8px);
-            border-radius: 1.5rem;
-            border: 1.5px solid #33415544;
-        }
-        .bubble {
-            background: linear-gradient(135deg, #16203A 80%, #232b46 100%);
-            border-radius: 1.5rem;
-            box-shadow: 0 8px 40px #1a223a99, 0 1.5px 8px #000a;
-            border: 1.5px solid #5B83EB;
-        }
-    </style>
+    {% include '_head.html' %}
 </head>
 <body class="min-h-screen text-white">
-    <!-- Navigation -->
-    <nav class="flex justify-between items-center px-8 py-6 z-10 relative">
-        <div class="flex items-center space-x-3">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="IntelliPattern Logo" class="w-8 h-8">
-            <span class="text-2xl font-bold tracking-wide bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">IntelliPattern</span>
-        </div>
-        <div class="flex items-center space-x-6">
-            <a href="/" class="hover:text-blue-400 transition">Home</a>
-            <a href="/dashboard" class="hover:text-blue-400 transition">Dashboard</a>
-            <a href="/patterns" class="hover:text-blue-400 transition">Patterns</a>
-            <a href="/ai-insights" class="hover:text-blue-400 transition">AI Insights</a>
-        </div>
-    </nav>
+    {% include '_nav.html' %}
 
     <main class="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <div class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-2 gradient-text drop-shadow-lg flex items-center justify-center gap-3" style="background: linear-gradient(90deg, #5B83EB 0%, #1A3A7C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent;">
-                <span>🤖</span> AI Learning Coach
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-2 gradient-text drop-shadow-lg flex items-center justify-center gap-3">
+                <i class="fas fa-robot text-blue-400"></i> AI Learning Coach
             </h1>
             <p class="text-lg text-blue-100 mb-4">Powered by Google Gemini AI</p>
             {% if data_points %}
@@ -64,14 +31,14 @@
                 </div>
                 <h2 class="text-2xl font-bold text-blue-200">Your Personalized AI Analysis</h2>
             </div>
-            <div class="bg-[#232b46] rounded-xl p-6 border-l-4 border-blue-500">
+            <div class="bg-[#1e1e20] rounded-xl p-6 border-l-4 border-blue-500">
                 {% if insight %}
                     <div class="ai-insight-content prose prose-invert max-w-none text-blue-100 text-lg">
                         {{ insight|replace('\n', '<br>')|safe }}
                     </div>
                 {% else %}
                     <div class="text-center py-5">
-                        <div class="text-6xl mb-3">🤖</div>
+                        <div class="text-5xl mb-3 text-blue-400"><i class="fas fa-robot"></i></div>
                         <p class="text-blue-200">AI analysis is loading...</p>
                     </div>
                 {% endif %}
@@ -91,7 +58,7 @@
                 <h5 class="text-lg font-semibold text-green-200 mb-2 flex items-center"><i class="fas fa-sync-alt text-green-400 mr-2"></i>Refresh Analysis</h5>
                 <p class="text-blue-100 mb-3">Get updated AI insights based on your latest data.</p>
                 <button onclick="location.reload()" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-full shadow transition-all duration-300">
-                    <i class="fas fa-refresh mr-2"></i>Refresh AI Analysis
+                    <i class="fas fa-rotate mr-2"></i>Refresh AI Analysis
                 </button>
             </div>
         </div>
@@ -109,15 +76,15 @@
                     <span class="text-blue-100"> <strong>AI Processing:</strong> Uses Google Gemini to find patterns and correlations</span>
                 </div>
                 <div class="flex items-center">
-                    <i class="fas fa-target text-pink-400 text-2xl mr-3"></i>
+                    <i class="fas fa-bullseye text-pink-400 text-2xl mr-3"></i>
                     <span class="text-blue-100"> <strong>Personalized Advice:</strong> Provides actionable recommendations just for you</span>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="w-full text-center py-8 mt-16 text-blue-200 text-sm bg-gradient-to-t from-[#0a0f1c] via-transparent to-transparent">
-        Made with <span class="text-pink-400">&#10084;&#65039;</span> by <strong>Abhinaba Paul</strong><br>
+    <footer class="w-full text-center py-8 mt-16 text-blue-200 text-sm bg-gradient-to-t from-[#0b0b0c] via-transparent to-transparent">
+        Built by <strong>Abhinaba Paul</strong><br>
         <span class="text-blue-300">Computer Science Student at VIT, Vellore</span>
     </footer>
 </body>

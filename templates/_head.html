@@ -1,0 +1,39 @@
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS with the project palette: blue = gold, purple = ash, pink = copper -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Manrope', 'system-ui', 'sans-serif'],
+                    mono: ['JetBrains Mono', 'ui-monospace', 'monospace']
+                },
+                colors: {
+                    blue: {
+                        50: '#fafaf9', 100: '#f1efec', 200: '#dcd8d2', 300: '#f2d27a', 400: '#e8b94a',
+                        500: '#d4a02a', 600: '#a8760f', 700: '#86600c', 800: '#654809', 900: '#4a3507', 950: '#2b1f04'
+                    },
+                    purple: {
+                        50: '#fafaf9', 100: '#e7e5e4', 200: '#d6d3d1', 300: '#c4bfba', 400: '#a8a29e',
+                        500: '#8a847e', 600: '#6e6963', 700: '#57534e', 800: '#44403c', 900: '#292524', 950: '#1c1917'
+                    },
+                    pink: {
+                        50: '#fbf3ee', 100: '#f5e2d6', 200: '#ebc4ac', 300: '#e0a584', 400: '#d98c5f',
+                        500: '#c97b4a', 600: '#a8623a', 700: '#864d2d', 800: '#653a22', 900: '#4a2a18', 950: '#2a170d'
+                    }
+                }
+            }
+        }
+    };
+</script>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Shared theme -->
+<link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}">

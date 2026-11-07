@@ -48,15 +48,15 @@ GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel('gemini-1.5-flash-latest')
-    print("✅ Gemini AI configured successfully!")
+    print("Gemini AI configured successfully!")
 else:
     model = None
-    print("⚠️ Warning: GEMINI_API_KEY not found in environment variables")
+    print("Warning: GEMINI_API_KEY not found in environment variables")
 
 def get_ai_insights():
     """Get AI insights from current user's study data"""
     if not model:
-        return "🤖 AI analysis unavailable - Please configure your API key in the .env file."
+        return "AI analysis unavailable - Please configure your API key in the .env file."
     
     try:
         # Get comprehensive data for current user
@@ -75,11 +75,11 @@ def get_ai_insights():
         
         # Check if there's enough data for meaningful analysis
         if len(study_data) < 3:
-            return """🚀 **Getting Started with AI Analysis**
+            return """**Getting Started with AI Analysis**
 
 Welcome to your AI Learning Coach! I'm here to help you optimize your academic performance.
 
-**Current Status:** You have {} study session(s) logged. To provide meaningful insights, I recommend logging at least 5-10 study sessions along with some wellness data.
+**Current Status:**You have {} study session(s) logged. To provide meaningful insights, I recommend logging at least 5-10 study sessions along with some wellness data.
 
 **Quick Tips to Get Started:**
 • Log your study sessions with honest focus ratings
@@ -88,12 +88,12 @@ Welcome to your AI Learning Coach! I'm here to help you optimize your academic p
 • Be consistent - even 5 minutes of logging can reveal patterns!
 
 **What I'll Analyze Once You Have More Data:**
-✨ Peak performance times and optimal study durations
-📊 Correlations between sleep, stress, and focus
-📚 Which subjects and study methods work best for you
-🎯 Personalized recommendations for improvement
+- Peak performance times and optimal study durations
+- Correlations between sleep, stress, and focus
+- Which subjects and study methods work best for you
+- Personalized recommendations for improvement
 
-Keep logging your data - I'll be ready with insights soon! 🎓""".format(len(study_data))
+Keep logging your data - I'll be ready with insights soon!""".format(len(study_data))
         
         # Prepare data for AI analysis
         data_summary = {
@@ -139,19 +139,19 @@ Keep logging your data - I'll be ready with insights soon! 🎓""".format(len(st
 
         Provide insights in this format:
 
-        **🎯 KEY PATTERNS DISCOVERED**
+        **KEY PATTERNS DISCOVERED**
         [Identify 2-3 most important patterns in their data]
 
-        **📊 PERFORMANCE CORRELATIONS** 
+        **PERFORMANCE CORRELATIONS** 
         [Correlations between wellness factors and academic performance]
 
-        **💪 YOUR STRENGTHS**
+        **YOUR STRENGTHS**
         [What they're doing well - be specific with data]
 
-        **🚀 OPTIMIZATION OPPORTUNITIES**
+        **OPTIMIZATION OPPORTUNITIES**
         [Specific, actionable recommendations]
 
-        **📅 NEXT STEPS**
+        **NEXT STEPS**
         [Concrete actions they can take this week]
 
         Keep response under 400 words. Use data points and be encouraging. Include emojis for engagement.
@@ -162,7 +162,7 @@ Keep logging your data - I'll be ready with insights soon! 🎓""".format(len(st
         
     except Exception as e:
         print(f"AI Analysis Error: {str(e)}")
-        return f"""🤖 **AI Analysis Temporarily Unavailable**
+        return f"""**AI Analysis Temporarily Unavailable**
 
 I'm having trouble analyzing your data right now, but don't worry! Here are some general insights while I get back online:
 
@@ -178,7 +178,7 @@ I'm having trouble analyzing your data right now, but don't worry! Here are some
 
 Error details: {str(e)}
 
-Try refreshing the page in a few minutes! 🔄"""
+Try refreshing the page in a few minutes!"""
 
 # Authentication routes
 @app.route('/login', methods=['GET', 'POST'])
@@ -195,7 +195,7 @@ def login():
             db.session.commit()
             
             next_page = request.args.get('next')
-            flash(f'Welcome back! 🎉', 'success')
+            flash(f'Welcome back!', 'success')
             return redirect(next_page) if next_page else redirect(url_for('dashboard'))
         else:
             flash('Invalid email or password. Please try again.', 'error')
@@ -282,7 +282,7 @@ def log_study():
         db.session.add(session)
         db.session.commit()
         
-        flash('Study session logged successfully! 📚', 'success')
+        flash('Study session logged successfully!', 'success')
         return redirect(url_for('dashboard'))
     
     return render_template('log_study.html', title='Log Study Session')
@@ -312,7 +312,7 @@ def log_performance():
         db.session.add(record)
         db.session.commit()
         
-        flash('Performance record added successfully! 📈', 'success')
+        flash('Performance record added successfully!', 'success')
         return redirect(url_for('dashboard'))
     
     return render_template('log_performance.html', title='Log Performance')
@@ -344,7 +344,7 @@ def log_wellness():
         db.session.add(wellness)
         db.session.commit()
         
-        flash('Wellness data logged successfully! 💪', 'success')
+        flash('Wellness data logged successfully!', 'success')
         return redirect(url_for('dashboard'))
     
     return render_template('log_wellness.html', title='Log Wellness')
@@ -360,7 +360,7 @@ def patterns():
     
     if len(study_sessions) < 2:
         patterns.append({
-            'title': '📊 Getting Started',
+            'title': 'Getting Started',
             'description': 'Keep logging your study sessions to discover your personal learning patterns!',
             'recommendation': 'Try logging at least 5-10 study sessions to see meaningful insights.',
             'type': 'info'
@@ -371,7 +371,7 @@ def patterns():
         if high_focus_sessions:
             avg_duration = sum(s.duration for s in high_focus_sessions) / len(high_focus_sessions)
             patterns.append({
-                'title': '🎯 High Focus Sessions',
+                'title': 'High Focus Sessions',
                 'description': f'Your high-focus sessions (4-5 rating) average {avg_duration:.0f} minutes',
                 'recommendation': 'Try to replicate conditions that lead to high focus sessions!',
                 'type': 'positive'
@@ -392,7 +392,7 @@ def patterns():
             if best_subject[1]['count'] >= 2:
                 avg_focus = best_subject[1]['focus_sum'] / best_subject[1]['count']
                 patterns.append({
-                    'title': f'📚 Top Subject: {best_subject[0]}',
+                    'title': f'Top Subject: {best_subject[0]}',
                     'description': f'Average focus rating: {avg_focus:.1f}/5 ({best_subject[1]["count"]} sessions)',
                     'recommendation': f'You focus well on {best_subject[0]}. Apply similar techniques to other subjects.',
                     'type': 'insight'
@@ -404,7 +404,7 @@ def patterns():
 @login_required
 def ai_insights():
     """Display AI-powered insights"""
-    print("🤖 Generating AI insights...")
+    print("Generating AI insights...")
     insight = get_ai_insights()
     
     # Get data point count for display
@@ -503,7 +503,7 @@ def delete_account():
                 db.session.delete(user_to_delete)
                 db.session.commit()
                 
-                flash('Your account and all associated data have been permanently deleted. We\'re sorry to see you go! 👋', 'info')
+                flash('Your account and all associated data have been permanently deleted. We\'re sorry to see you go!', 'info')
                 return redirect(url_for('home'))
             else:
                 flash('Account not found. Please contact support.', 'error')
@@ -522,6 +522,6 @@ if __name__ == '__main__':
     # Create database tables
     with app.app_context():
         db.create_all()
-        print("✅ Database tables created successfully!")
+        print("Database tables created successfully!")
     
     app.run(debug=True)
