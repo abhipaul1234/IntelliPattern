@@ -85,7 +85,18 @@
                 </div>
 
                 <!-- Submit Button -->
-                {{ form.submit(class="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 glow") }}
+                {{ form.submit(class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-semibold rounded-lg transition-all duration-300 glow") }}
+            </form>
+
+            <!-- Guest access -->
+            <div class="flex items-center gap-3 my-5 text-xs uppercase tracking-widest text-gray-500">
+                <span class="flex-1 h-px bg-white/10"></span>or<span class="flex-1 h-px bg-white/10"></span>
+            </div>
+            <form method="POST" action="{{ url_for('guest_login') }}">
+                <button type="submit" class="w-full py-3 border border-white/20 hover:bg-white/10 text-white font-semibold rounded-lg transition-colors">
+                    <i class="fas fa-user-clock mr-2"></i>Continue as guest
+                </button>
+                <p class="mt-2 text-center text-xs text-gray-400">No sign-up needed. Your data is removed when you exit or after 24 hours.</p>
             </form>
 
             <!-- Login Link -->

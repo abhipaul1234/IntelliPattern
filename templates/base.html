@@ -26,7 +26,15 @@
         <div class="relative z-10 flex flex-col items-center text-center" data-aos="fade-up">
             <h1 class="text-5xl md:text-7xl font-extrabold gradient-text mb-6" style="line-height:1.1;">Your AI Learning Coach</h1>
             <p class="text-xl md:text-2xl font-medium text-blue-100 mb-8 max-w-2xl">Log study habits, track wellness, and get AI-powered insights to optimize your learning journey.</p>
-            <a href="/dashboard" class="inline-block w-[200px] h-[50px] leading-[50px] text-lg font-bold rounded-full bg-gradient-to-r from-[#b9840f] to-[#8a620c] text-white shadow-lg glow transition-transform duration-200 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-blue-400" data-aos="zoom-in" data-aos-delay="200">Go to Dashboard</a>
+            <div class="flex flex-col sm:flex-row items-center gap-4" data-aos="zoom-in" data-aos-delay="200">
+                <a href="/dashboard" class="inline-block w-[220px] h-[50px] leading-[50px] text-lg font-bold rounded-full bg-gradient-to-r from-[#b9840f] to-[#8a620c] text-white shadow-lg glow transition-transform duration-200 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-blue-400">Go to Dashboard</a>
+                <form method="POST" action="{{ url_for('guest_login') }}">
+                    <button type="submit" class="inline-flex items-center justify-center gap-2 w-[220px] h-[50px] text-lg font-semibold rounded-full border border-white/25 text-white hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <i class="fas fa-user-clock text-base"></i>Use as guest
+                    </button>
+                </form>
+            </div>
+            <p class="mt-4 text-sm text-gray-400">No sign-up needed. Guest data is removed when you exit or after 24 hours.</p>
         </div>
     </section>
 

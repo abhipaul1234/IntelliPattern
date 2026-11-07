@@ -2,13 +2,14 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
+import secrets
 import tempfile
 import google.generativeai as genai
 from dotenv import load_dotenv
 import json
-from models import db, User, StudySession, PerformanceRecord, WellnessTracking
+from models import db, User, StudySession, PerformanceRecord, WellnessTracking, GUEST_EMAIL_DOMAIN
 from forms import LoginForm, RegisterForm
 
 # Load environment variables
@@ -201,20 +202,61 @@ Error details: {str(e)}
 
 Try refreshing the page in a few minutes!"""
 
+# Guest sessions: a temporary account that needs no sign-up. Its data is removed when the guest
+# exits, or after GUEST_LIFETIME, whichever comes first.
+GUEST_LIFETIME = timedelta(hours=24)
+
+def delete_guest(user_id):
+    """Delete a guest account and everything logged under it (the relationships cascade)."""
+    guest = db.session.get(User, user_id)
+    if guest and guest.is_guest:
+        db.session.delete(guest)
+        db.session.commit()
+
+def remove_expired_guests():
+    cutoff = datetime.utcnow() - GUEST_LIFETIME
+    expired = User.query.filter(User.email.like('%@' + GUEST_EMAIL_DOMAIN), User.created_at < cutoff).all()
+    for guest in expired:
+        db.session.delete(guest)
+    db.session.commit()
+
+@app.route('/guest', methods=['POST'])
+def guest_login():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+
+    try:
+        remove_expired_guests()
+    except Exception as e:
+        db.session.rollback()
+        print(f"Guest cleanup error: {str(e)}")
+
+    guest = User(email=f'guest-{secrets.token_hex(6)}@{GUEST_EMAIL_DOMAIN}')
+    guest.set_password(secrets.token_urlsafe(24))
+    guest.last_login = datetime.utcnow()
+    db.session.add(guest)
+    db.session.commit()
+
+    login_user(guest)
+    return redirect(url_for('dashboard'))
+
 # Authentication routes
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and not current_user.is_guest:
         return redirect(url_for('dashboard'))
-    
+
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data.lower()).first()
         if user and user.check_password(form.password.data):
+            guest_id = current_user.id if current_user.is_authenticated else None
             login_user(user, remember=form.remember_me.data)
             user.last_login = datetime.utcnow()
             db.session.commit()
-            
+            if guest_id:
+                delete_guest(guest_id)
+
             next_page = request.args.get('next')
             flash(f'Welcome back!', 'success')
             return redirect(next_page) if next_page else redirect(url_for('dashboard'))
@@ -225,7 +267,7 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and not current_user.is_guest:
         return redirect(url_for('dashboard'))
     
     form = RegisterForm()
@@ -243,8 +285,18 @@ def register():
 @app.route('/logout')
 @login_required
 def logout():
+    guest_id = current_user.id if current_user.is_guest else None
     logout_user()
-    flash('You have been logged out successfully.', 'info')
+    if guest_id:
+        # A guest cannot sign back in, so remove the account and its data straight away
+        try:
+            delete_guest(guest_id)
+        except Exception as e:
+            db.session.rollback()
+            print(f"Guest removal error: {str(e)}")
+        flash('Guest session ended and its data was removed.', 'info')
+    else:
+        flash('You have been logged out successfully.', 'info')
     return redirect(url_for('home'))
 
 @app.route('/')

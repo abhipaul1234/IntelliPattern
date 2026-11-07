@@ -5,6 +5,9 @@ from bcrypt import hashpw, gensalt, checkpw
 
 db = SQLAlchemy()
 
+# Guest sessions are ordinary user rows whose email uses this reserved domain
+GUEST_EMAIL_DOMAIN = 'guest.intellipattern.local'
+
 class User(UserMixin, db.Model):
     """User model for authentication"""
     __tablename__ = 'users'
@@ -20,6 +23,11 @@ class User(UserMixin, db.Model):
     performance_records = db.relationship('PerformanceRecord', backref='user', lazy=True, cascade='all, delete-orphan')
     wellness_tracking = db.relationship('WellnessTracking', backref='user', lazy=True, cascade='all, delete-orphan')
     
+    @property
+    def is_guest(self):
+        """True for temporary guest sessions"""
+        return self.email.endswith('@' + GUEST_EMAIL_DOMAIN)
+
     def set_password(self, password):
         """Hash and set password"""
         salt = gensalt()

@@ -16,14 +16,26 @@
                 <a href="/dashboard" class="nav-link py-2 md:py-0 {{ 'active' if current_path == '/dashboard' }}">Dashboard</a>
                 <a href="/patterns" class="nav-link py-2 md:py-0 {{ 'active' if current_path == '/patterns' }}">Patterns</a>
                 <a href="/ai-insights" class="nav-link py-2 md:py-0 {{ 'active' if current_path == '/ai-insights' }}">AI Insights</a>
-                <span class="text-gray-400 text-sm py-2 md:py-0 truncate max-w-[16rem]">{{ current_user.email }}</span>
-                <a href="/logout" class="inline-flex items-center justify-center gap-2 border border-white/20 hover:bg-white/10 px-4 py-2 rounded-lg text-sm font-medium transition-colors"><i class="fas fa-arrow-right-from-bracket text-xs"></i>Logout</a>
+                {% if current_user.is_guest %}
+                    <span class="inline-flex items-center gap-2 text-sm text-blue-400 py-2 md:py-0"><i class="fas fa-user-clock text-xs"></i>Guest session</span>
+                    <a href="/register" class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors">Create account</a>
+                    <a href="/logout" class="inline-flex items-center justify-center gap-2 border border-white/20 hover:bg-white/10 px-4 py-2 rounded-lg text-sm font-medium transition-colors"><i class="fas fa-arrow-right-from-bracket text-xs"></i>Exit guest</a>
+                {% else %}
+                    <span class="text-gray-400 text-sm py-2 md:py-0 truncate max-w-[16rem]">{{ current_user.email }}</span>
+                    <a href="/logout" class="inline-flex items-center justify-center gap-2 border border-white/20 hover:bg-white/10 px-4 py-2 rounded-lg text-sm font-medium transition-colors"><i class="fas fa-arrow-right-from-bracket text-xs"></i>Logout</a>
+                {% endif %}
             {% else %}
                 <a href="/login" class="nav-link py-2 md:py-0 {{ 'active' if current_path == '/login' }}">Login</a>
                 <a href="/register" class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors">Sign Up</a>
             {% endif %}
         </div>
     </div>
+    {% if current_user.is_authenticated and current_user.is_guest %}
+    <div class="border-t border-white/10 bg-white/5 text-center text-xs sm:text-sm text-gray-300 px-4 py-2">
+        You are using a guest session. Your data is removed when you exit or after 24 hours.
+        <a href="/register" class="text-blue-400 hover:text-blue-300 underline underline-offset-2">Create an account</a> to keep a record.
+    </div>
+    {% endif %}
 </nav>
 <script>
     (function () {
